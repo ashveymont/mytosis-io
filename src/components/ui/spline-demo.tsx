@@ -36,7 +36,7 @@ export function SplineSceneBasic() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-neutral-400">"</span>I build so the next generation never wonders if it's possible<span className="text-neutral-400">"</span>
+            <span className="text-neutral-400">&ldquo;</span>I build so the next generation never wonders if it&apos;s possible<span className="text-neutral-400">&rdquo;</span>
             <motion.span 
               className="block text-lg text-neutral-400 mt-4"
               initial={{ opacity: 0 }}

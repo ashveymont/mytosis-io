@@ -2,8 +2,8 @@ import { SplineSceneBasic } from "@/components/ui/spline-demo";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <div className="h-screen w-full">
       <SplineSceneBasic />
-    </main>
+    </div>
   );
 }

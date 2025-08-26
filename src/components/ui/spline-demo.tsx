@@ -7,7 +7,8 @@ import { motion } from 'framer-motion'
  
 export function SplineSceneBasic() {
   return (
-    <Card className="fixed inset-0 w-screen h-screen bg-gradient-to-br from-black to-neutral-950 overflow-hidden">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-black to-neutral-950">
+      <Card className="absolute inset-0 border-0 rounded-none">
       {/* Subtle grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f0a_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f0a_1px,transparent_1px)] bg-[size:24px_24px]" />
       
@@ -30,22 +31,27 @@ export function SplineSceneBasic() {
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400 leading-tight tracking-tight">
             Mytosis AI
           </h1>
-          <motion.p 
-            className="mt-8 text-2xl md:text-3xl text-neutral-300 max-w-3xl leading-relaxed"
+          <motion.div 
+            className="mt-8 max-w-3xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-neutral-400">&ldquo;</span>I build so the next generation never wonders if it&apos;s possible<span className="text-neutral-400">&rdquo;</span>
+            <div className="text-xl md:text-2xl text-neutral-400 italic mb-1">
+              Pioneering
+            </div>
+            <div className="text-2xl md:text-4xl font-bold text-white leading-tight">
+              Sri Lanka's First Agentic AI & Hologram Company
+            </div>
             <motion.span 
               className="block text-lg text-neutral-400 mt-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              — Ashan Veymont
+              <span className="font-semibold">Building elite AI Agents at the intersection of psychology and technology</span>
             </motion.span>
-          </motion.p>
+          </motion.div>
         </motion.div>
 
         {/* Right content */}
@@ -65,5 +71,6 @@ export function SplineSceneBasic() {
       {/* Subtle gradient at the bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-20" />
     </Card>
+  </div>  
   )
 }

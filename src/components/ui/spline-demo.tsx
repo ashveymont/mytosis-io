@@ -41,7 +41,7 @@ export function SplineSceneBasic() {
               Pioneering
             </div>
             <div className="text-2xl md:text-4xl font-bold text-white leading-tight">
-              Sri Lanka's First Agentic AI & Hologram Company
+              Sri Lanka&apos;s First Agentic AI & Hologram Company
             </div>
             <motion.span 
               className="block text-lg text-neutral-400 mt-4"

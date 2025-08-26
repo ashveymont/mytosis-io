@@ -1,12 +1,7 @@
 "use client";
 import * as React from "react";
-import { useState, useRef } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -92,7 +87,7 @@ export const FloatingNav = ({
           className
         )}
       >
-        {navItems.map((navItem: any, idx: number) => (
+        {navItems.map((navItem: { name: string; link: string; icon?: React.ReactNode }, idx: number) => (
           <NavItem 
             key={`nav-item-${idx}`}
             item={navItem}

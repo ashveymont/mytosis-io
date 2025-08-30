@@ -355,7 +355,6 @@ export function AnimatedAIChat() {
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
                             whileHover={{ scale: 1.01 }}
-                            transition={{ duration: 0.3 }}
                         >
                             <AnimatePresence>
                                 {showCommandPalette && (

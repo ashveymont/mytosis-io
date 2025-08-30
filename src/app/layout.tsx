@@ -36,9 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background h-full overflow-hidden`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
         <FloatingNavDemo />
-        <main className="h-full">
+        <main>
           {children}
         </main>
       </body>

@@ -3,12 +3,13 @@
 import { SplineScene } from "@/components/ui/splite"
 import { Card } from "@/components/ui/card"
 import { Spotlight } from "@/components/ui/spotlight"
+import { FloatingCTA } from "@/components/ui/floating-cta"
 import { motion } from 'framer-motion'
  
 export function SplineSceneBasic() {
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-br from-black to-neutral-950">
-      <Card className="absolute inset-0 border-0 rounded-none">
+      <Card className="relative w-full min-h-screen md:absolute md:inset-0 border-0 rounded-none overflow-hidden">
       {/* Subtle grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f0a_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f0a_1px,transparent_1px)] bg-[size:24px_24px]" />
       
@@ -38,19 +39,22 @@ export function SplineSceneBasic() {
             transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="text-xl md:text-2xl text-neutral-400 italic mb-1">
-              Pioneering
+              Hotel AI Infrastructure by Blackcrest Scaling
             </div>
-            <div className="text-2xl md:text-4xl font-bold text-white leading-tight">
-              Sri Lanka&apos;s First Agentic AI & Hologram Company
+            <div className="text-lg md:text-xl font-bold text-neutral-200 leading-relaxed max-w-xl">
+              Missed calls become Booking.com reservations. OTA commissions consume margins you can&apos;t recover. Front desks handle everything — and fail everything simultaneously.
             </div>
-            <motion.span 
+            <motion.span
               className="block text-lg text-neutral-400 mt-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              <span className="font-semibold">Building elite AI Agents at the intersection of psychology and technology</span>
+              <span className="font-semibold">Mytosis installs AI voice and chat agents that stop the bleed.</span>
             </motion.span>
+            <div className="mt-8">
+              <FloatingCTA />
+            </div>
           </motion.div>
         </motion.div>
 

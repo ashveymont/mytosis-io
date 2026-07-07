@@ -13,47 +13,47 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* Hero Section - First Page */}
-      <div className="w-full">
+      <div id="hero" className="w-full">
         <SplineSceneBasic />
       </div>
 
       {/* Problem Section - Strip */}
-      <div className="w-full">
+      <div id="problem" className="w-full">
         <ProblemSection />
       </div>
 
       {/* Revenue Leaks Section */}
-      <div className="w-full">
+      <div id="revenue-leaks" className="w-full">
         <RevenueLeaksSection />
       </div>
 
       {/* Why This Keeps Happening */}
-      <div className="w-full">
+      <div id="insight" className="w-full">
         <WhySection />
       </div>
 
       {/* The Agents */}
-      <div className="w-full">
+      <div id="agents" className="w-full">
         <AgentsSection />
       </div>
 
       {/* The ROI Case */}
-      <div className="w-full">
+      <div id="roi" className="w-full">
         <RoiSection />
       </div>
 
       {/* Integrations */}
-      <div className="w-full">
+      <div id="integrations" className="w-full">
         <IntegrationsSection />
       </div>
 
       {/* About / Built By */}
-      <div className="w-full">
+      <div id="about" className="w-full">
         <AboutSection />
       </div>
 
       {/* Lead Capture */}
-      <div className="w-full">
+      <div id="contact" className="w-full">
         <LeadCaptureSection />
       </div>
 

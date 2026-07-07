@@ -48,15 +48,15 @@ export function SplineSceneBasic() {
         </motion.div>
 
         {/* Right content */}
-        <motion.div 
-          className="flex-1 relative h-full min-h-[50vh] md:min-h-0"
+        <motion.div
+          className="flex-1 relative h-full min-h-[50vh] md:min-h-0 overflow-hidden"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <SplineScene 
+          <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full"
+            className="absolute inset-0 w-full h-full scale-[1.5] md:scale-[1] md:relative md:inset-auto"
           />
         </motion.div>
       </div>

@@ -93,7 +93,7 @@ export function RoiSection() {
             Setup pays back in
           </div>
           <p className="mt-4 text-neutral-300 leading-relaxed max-w-2xl mx-auto">
-            Setup investment returns in under one week of recovered bookings. One captured call per day at a $200 average room rate generates $73,000 per year. Mytosis setup is a one-time investment of $4,000–$6,000 with a monthly retainer of $800–$1,500. The math does not require optimism.
+            Setup investment returns in under one week of recovered bookings. One captured call per day at a $200 average room rate generates $73,000 per year.
           </p>
         </PremiumCard>
       </div>

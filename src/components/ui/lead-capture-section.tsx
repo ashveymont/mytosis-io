@@ -13,11 +13,31 @@ const inputClasses =
   'w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-neutral-500 outline-none transition-all duration-300 focus:border-white/30 focus:bg-white/[0.08] focus:shadow-[0_0_0_4px_rgba(255,255,255,0.06)] disabled:opacity-60'
 
 export function LeadCaptureSection() {
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted' | 'error'>('idle')
+  const submitted = status === 'submitted'
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
+    const form = e.currentTarget
+    const data = new FormData(form)
+    setStatus('submitting')
+
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          email: data.get('email'),
+          company: data.get('company'),
+        }),
+      })
+
+      if (!res.ok) throw new Error('Request failed')
+      setStatus('submitted')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -78,12 +98,21 @@ export function LeadCaptureSection() {
 
           <button
             type="submit"
-            disabled={submitted}
+            disabled={status === 'submitting' || submitted}
             className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-gradient-to-br from-white/20 to-white/5 px-6 py-3 text-sm font-semibold text-white shadow-[0_2px_20px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:from-white/30 hover:to-white/10 hover:shadow-[0_4px_30px_rgba(255,255,255,0.15)] disabled:cursor-default disabled:hover:border-white/10 disabled:hover:from-white/20 disabled:hover:to-white/5 disabled:hover:shadow-[0_2px_20px_rgba(0,0,0,0.5)] sm:text-base"
           >
-            {submitted ? "Submitted — we'll be in touch." : 'Request Access'}
-            {!submitted && <span aria-hidden="true">→</span>}
+            {status === 'submitting' && 'Sending…'}
+            {status === 'idle' && 'Request Access'}
+            {status === 'error' && 'Try again'}
+            {submitted && "Submitted — we'll be in touch."}
+            {(status === 'idle' || status === 'error') && <span aria-hidden="true">→</span>}
           </button>
+
+          {status === 'error' && (
+            <p className="text-center text-sm text-red-400">
+              Something went wrong. Please try again in a moment.
+            </p>
+          )}
 
           <p className="text-center text-sm text-neutral-500">
             No sales pitch. No deck. A direct conversation about your numbers.

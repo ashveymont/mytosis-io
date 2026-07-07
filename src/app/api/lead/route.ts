@@ -16,10 +16,10 @@ export async function POST(request: Request) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.LEAD_NOTIFICATION_EMAIL;
+  const toEmail = process.env.RESEND_EMAIL;
 
   if (!apiKey || !toEmail) {
-    console.error("Lead capture is missing RESEND_API_KEY or LEAD_NOTIFICATION_EMAIL");
+    console.error("Lead capture is missing RESEND_API_KEY or RESEND_EMAIL");
     return NextResponse.json({ error: "Server not configured." }, { status: 500 });
   }
 

@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { OrganizationSchema } from "@/components/seo/organization-schema";
 import { FAQSchema } from "@/components/seo/faq-schema";
+
+const GA_MEASUREMENT_ID = "G-H3QP4TP611";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +42,7 @@ export const metadata: Metadata = {
     "hotel chat agent WhatsApp",
     "hotel revenue infrastructure",
   ],
-  authors: [{ name: "Blackcrest Scaling", url: siteUrl }],
+  authors: [{ name: "Blackcrest Scaling", url: "https://www.blackcrestscaling.com" }],
   creator: "Blackcrest Scaling",
   publisher: "Blackcrest Scaling",
   alternates: {
@@ -84,6 +87,18 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background font-sans`}>
         <OrganizationSchema />
         <FAQSchema />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <main>
           {children}
         </main>

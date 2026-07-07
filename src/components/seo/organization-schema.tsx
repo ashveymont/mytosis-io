@@ -18,6 +18,13 @@ export function OrganizationSchema() {
     parentOrganization: {
       '@type': 'Organization',
       name: 'Blackcrest Scaling',
+      url: 'https://www.blackcrestscaling.com',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      email: 'av@blackcrestscaling.com',
+      availableLanguage: ['English'],
     },
   }
 

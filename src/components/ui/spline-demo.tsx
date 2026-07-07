@@ -41,17 +41,6 @@ export function SplineSceneBasic() {
             <div className="text-xl md:text-2xl text-neutral-400 italic mb-1">
               Hotel AI Infrastructure by Blackcrest Scaling
             </div>
-            <div className="text-lg md:text-xl font-bold text-neutral-200 leading-relaxed max-w-xl">
-              Missed calls become Booking.com reservations. OTA commissions consume margins you can&apos;t recover. Front desks handle everything — and fail everything simultaneously.
-            </div>
-            <motion.span
-              className="block text-lg text-neutral-400 mt-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              <span className="font-semibold">Mytosis installs AI voice and chat agents that stop the bleed.</span>
-            </motion.span>
             <div className="mt-8">
               <FloatingCTA />
             </div>

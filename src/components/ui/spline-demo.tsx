@@ -23,8 +23,8 @@ export function SplineSceneBasic() {
       
       <div className="flex flex-col md:flex-row h-full w-full max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Left content */}
-        <motion.div 
-          className="flex-1 p-8 relative z-10 flex flex-col justify-center h-full"
+        <motion.div
+          className="flex-1 p-8 relative z-10 flex flex-col justify-center items-center text-center md:items-start md:text-left h-full"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -56,7 +56,7 @@ export function SplineSceneBasic() {
         >
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="absolute inset-0 w-full h-full scale-[1.5] md:scale-[1] md:relative md:inset-auto"
+            className="absolute inset-0 w-full h-full scale-[1.15] md:scale-[1] md:relative md:inset-auto"
           />
         </motion.div>
       </div>

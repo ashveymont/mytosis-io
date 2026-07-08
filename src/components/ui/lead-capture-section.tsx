@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const fadeUp = {
@@ -15,6 +15,7 @@ const inputClasses =
 export function LeadCaptureSection() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted' | 'error'>('idle')
   const submitted = status === 'submitted'
+  const mountedAt = useRef(Date.now())
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -30,6 +31,9 @@ export function LeadCaptureSection() {
           name: data.get('name'),
           email: data.get('email'),
           company: data.get('company'),
+          // Honeypot — real users never fill this; bots often fill every field
+          website: data.get('website'),
+          elapsedMs: Date.now() - mountedAt.current,
         }),
       })
 
@@ -71,6 +75,16 @@ export function LeadCaptureSection() {
         </motion.div>
 
         <form onSubmit={handleSubmit} className="mt-10 space-y-4">
+          {/* Honeypot field — hidden from real users, bots tend to fill every input */}
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden opacity-0"
+          />
+
           <input
             type="text"
             name="name"

@@ -3,12 +3,14 @@
 import { useEffect, useState } from 'react'
 import Script from 'next/script'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const GA_MEASUREMENT_ID = 'G-H3QP4TP611'
 const CONSENT_KEY = 'mytosis-cookie-consent'
 
 export function CookieConsent() {
+  const pathname = usePathname()
   const [consent, setConsent] = useState<'pending' | 'granted' | 'denied'>('pending')
   const [showBanner, setShowBanner] = useState(false)
 
@@ -20,6 +22,8 @@ export function CookieConsent() {
       setShowBanner(true)
     }
   }, [])
+
+  if (pathname?.startsWith('/cinnamon-demo')) return null
 
   function choose(choice: 'granted' | 'denied') {
     localStorage.setItem(CONSENT_KEY, choice)

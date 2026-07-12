@@ -17,7 +17,23 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/(.*)",
+        // /cinnamon-demo needs microphone access for the Vapi voice widget,
+        // and Vapi's WebRTC infrastructure isn't in the main site's CSP
+        // allowlist — so it gets its own, more permissive header set,
+        // matched first and excluded from the general rule below.
+        source: "/cinnamon-demo",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(self), geolocation=()",
+          },
+        ],
+      },
+      {
+        source: "/((?!cinnamon-demo).*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },

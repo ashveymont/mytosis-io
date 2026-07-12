@@ -87,30 +87,30 @@ export function AmaraWidget() {
   }
 
   const statusConfig: Record<Status, { color: string; label: string; pulse?: boolean }> = {
-    idle: { color: 'bg-[#E5E5E5]', label: 'Ready' },
+    idle: { color: 'bg-neutral-600', label: 'Ready' },
     connecting: { color: 'bg-yellow-400', label: 'Connecting...', pulse: true },
     'in-call': { color: 'bg-green-500', label: 'In call with Amara', pulse: true },
-    ended: { color: 'bg-[#0C0D0E]', label: 'Call ended' },
+    ended: { color: 'bg-neutral-400', label: 'Call ended' },
     error: { color: 'bg-red-500', label: 'Error' },
   }
 
   const currentStatus = statusConfig[status]
 
   return (
-    <div className="max-w-md w-full mx-auto border border-[#E5E5E5] flex flex-col">
+    <div className="max-w-md w-full mx-auto rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md shadow-[0_8px_40px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden">
       {/* Status bar */}
-      <div className="border-b border-[#E5E5E5] px-6 py-4 flex items-center justify-between">
+      <div className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span
             className={`w-2 h-2 rounded-full ${currentStatus.color} ${currentStatus.pulse ? 'animate-pulse' : ''}`}
           />
-          <span className="text-xs text-[#555555] tracking-wide">{currentStatus.label}</span>
+          <span className="text-xs text-neutral-300 tracking-wide">{currentStatus.label}</span>
         </div>
         {status === 'in-call' && (
           <button
             type="button"
             onClick={toggleMute}
-            className="text-xs text-[#999999] hover:text-[#0C0D0E] transition-colors"
+            className="text-xs text-neutral-400 hover:text-white transition-colors"
           >
             {isMuted ? 'Unmute' : 'Mute'}
           </button>
@@ -119,39 +119,39 @@ export function AmaraWidget() {
 
       {/* Transcript area */}
       <div
-        className="overflow-y-auto flex flex-col gap-3 p-6 bg-[#FAFAFA]"
+        className="overflow-y-auto flex flex-col gap-3 p-6"
         style={{ minHeight: 240, maxHeight: 320 }}
       >
         {(status === 'idle' || status === 'connecting') && (
           <div className="flex-1 flex flex-col items-center justify-center text-center py-16">
             <p className="text-2xl mb-2">🎙️</p>
-            <p className="text-sm text-[#999999]">
+            <p className="text-sm text-neutral-400">
               {status === 'idle' ? 'Press "Call Amara" to begin.' : 'Connecting to Amara...'}
             </p>
           </div>
         )}
 
         {status === 'error' && (
-          <p className="text-sm text-red-500 text-center py-8">{errorMessage}</p>
+          <p className="text-sm text-red-400 text-center py-8">{errorMessage}</p>
         )}
 
         {(status === 'in-call' || status === 'ended') && (
           <>
             {transcript.length === 0 && status === 'ended' && (
-              <p className="text-sm text-[#999999] text-center py-8">No transcript captured.</p>
+              <p className="text-sm text-neutral-400 text-center py-8">No transcript captured.</p>
             )}
             {transcript.map((entry, i) => (
               <div key={i} className="flex flex-col gap-1">
                 <span
                   className={`text-[10px] uppercase tracking-widest font-semibold ${
-                    entry.speaker === 'Amara' ? 'text-[#0C0D0E]' : 'text-[#999999]'
+                    entry.speaker === 'Amara' ? 'text-white' : 'text-neutral-500'
                   }`}
                 >
                   {entry.speaker}
                 </span>
                 <p
                   className={`text-sm leading-relaxed ${
-                    entry.speaker === 'Amara' ? 'text-[#0C0D0E]' : 'text-[#555555] pl-4'
+                    entry.speaker === 'Amara' ? 'text-neutral-200' : 'text-neutral-400 pl-4'
                   }`}
                 >
                   {entry.text}
@@ -164,12 +164,12 @@ export function AmaraWidget() {
       </div>
 
       {/* Call controls */}
-      <div className="border-t border-[#E5E5E5] px-6 py-5 flex gap-3">
+      <div className="border-t border-white/10 px-6 py-5 flex gap-3">
         {status === 'idle' && (
           <button
             type="button"
             onClick={startCall}
-            className="bg-[#0C0D0E] text-white py-3 text-sm font-medium w-full hover:bg-[#333] transition-all"
+            className="rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/10 text-white py-3 text-sm font-semibold w-full hover:from-white/30 hover:to-white/10 transition-all"
           >
             Call Amara →
           </button>
@@ -179,7 +179,7 @@ export function AmaraWidget() {
           <button
             type="button"
             disabled
-            className="bg-[#E5E5E5] text-[#999999] py-3 text-sm w-full cursor-not-allowed"
+            className="rounded-full bg-white/5 border border-white/10 text-neutral-500 py-3 text-sm w-full cursor-not-allowed"
           >
             Connecting...
           </button>
@@ -189,7 +189,7 @@ export function AmaraWidget() {
           <button
             type="button"
             onClick={endCall}
-            className="flex-1 border border-[#0C0D0E] text-[#0C0D0E] py-3 text-sm font-medium hover:bg-[#0C0D0E] hover:text-white transition-all"
+            className="flex-1 rounded-full border border-white/20 text-white py-3 text-sm font-semibold hover:bg-white/10 transition-all"
           >
             End Call
           </button>
@@ -199,7 +199,7 @@ export function AmaraWidget() {
           <button
             type="button"
             onClick={resetDemo}
-            className="border border-[#E5E5E5] text-[#555555] py-3 text-sm w-full hover:border-[#0C0D0E] hover:text-[#0C0D0E] transition-all"
+            className="rounded-full border border-white/10 text-neutral-300 py-3 text-sm w-full hover:border-white/20 hover:text-white transition-all"
           >
             Start New Demo
           </button>

@@ -9,6 +9,19 @@ const ASSISTANT_ID = '77cdae2a-a6b7-4b5f-8a74-45ff16ec6cde'
 type Status = 'idle' | 'connecting' | 'in-call' | 'ended' | 'error'
 type TranscriptEntry = { speaker: 'Amara' | 'You'; text: string }
 
+// The SDK nests the real message at e.error.message for most failures (join
+// errors, daily errors, validation errors) rather than at the top level.
+function extractErrorMessage(e: unknown): string {
+  const err = e as
+    | { error?: { message?: string; name?: string }; message?: string; errorMsg?: string }
+    | undefined
+  const raw = err?.error?.message || err?.error?.name || err?.message || err?.errorMsg || ''
+  if (/denied|permission|notallowed/i.test(raw)) {
+    return 'Microphone access was blocked. Please allow microphone access in your browser and try again.'
+  }
+  return "We couldn't connect the call. Please try again in a moment."
+}
+
 export function AmaraWidget() {
   const [status, setStatus] = useState<Status>('idle')
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
@@ -37,9 +50,10 @@ export function AmaraWidget() {
 
     vapi.on('call-start', () => setStatus('in-call'))
     vapi.on('call-end', () => setStatus('ended'))
-    vapi.on('error', (e: { message?: string }) => {
+    vapi.on('error', (e: unknown) => {
+      console.warn('[Amara widget] Vapi error:', e)
       setStatus('error')
-      setErrorMessage(e?.message || 'Something went wrong.')
+      setErrorMessage(extractErrorMessage(e))
     })
     vapi.on(
       'message',
@@ -61,8 +75,9 @@ export function AmaraWidget() {
     try {
       await vapi.start(ASSISTANT_ID)
     } catch (e) {
+      console.warn('[Amara widget] Vapi start() threw:', e)
       setStatus('error')
-      setErrorMessage(e instanceof Error ? e.message : 'Microphone access denied.')
+      setErrorMessage(extractErrorMessage(e))
     }
   }
 
@@ -104,7 +119,9 @@ export function AmaraWidget() {
           <span
             className={`w-2 h-2 rounded-full ${currentStatus.color} ${currentStatus.pulse ? 'animate-pulse' : ''}`}
           />
-          <span className="text-xs text-neutral-300 tracking-wide">{currentStatus.label}</span>
+          <span className="text-xs text-neutral-300 tracking-wide" role="status" aria-live="polite">
+            {currentStatus.label}
+          </span>
         </div>
         {status === 'in-call' && (
           <button
@@ -124,10 +141,15 @@ export function AmaraWidget() {
       >
         {(status === 'idle' || status === 'connecting') && (
           <div className="flex-1 flex flex-col items-center justify-center text-center py-16">
-            <p className="text-2xl mb-2">🎙️</p>
+            <p className="text-2xl mb-2" aria-hidden="true">🎙️</p>
             <p className="text-sm text-neutral-400">
               {status === 'idle' ? 'Press "Call Amara" to begin.' : 'Connecting to Amara...'}
             </p>
+            {status === 'connecting' && (
+              <p className="text-xs text-neutral-500 mt-2">
+                Your browser may ask for microphone access — please allow it to continue.
+              </p>
+            )}
           </div>
         )}
 

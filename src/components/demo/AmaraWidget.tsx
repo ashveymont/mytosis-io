@@ -188,13 +188,16 @@ export function AmaraWidget() {
       {/* Call controls */}
       <div className="border-t border-white/10 px-6 py-5 flex gap-3">
         {status === 'idle' && (
-          <button
-            type="button"
-            onClick={startCall}
-            className="rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/10 text-white py-3 text-sm font-semibold w-full hover:from-white/30 hover:to-white/10 transition-all"
-          >
-            Call Amara →
-          </button>
+          <div className="relative w-full">
+            <div className="absolute -inset-1 rounded-full bg-blue-500/40 blur-md animate-pulse pointer-events-none" />
+            <button
+              type="button"
+              onClick={startCall}
+              className="relative rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-blue-400/40 text-white py-3 text-sm font-semibold w-full shadow-[0_0_25px_rgba(59,130,246,0.55)] hover:shadow-[0_0_35px_rgba(59,130,246,0.8)] hover:from-white/30 hover:to-white/10 transition-all"
+            >
+              Call Amara →
+            </button>
+          </div>
         )}
 
         {status === 'connecting' && (

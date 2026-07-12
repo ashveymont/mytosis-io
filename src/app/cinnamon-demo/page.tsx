@@ -6,7 +6,7 @@ import { FloatingCTA } from '@/components/ui/floating-cta'
 export const metadata: Metadata = {
   title: 'Amara — Cinnamon Hotels AI Voice Demo | Mytosis',
   description:
-    'Live demo of Amara, the AI voice agent built for Cinnamon Hotels & Resorts by Mytosis. She answers calls, checks availability, and books direct — 24/7.',
+    'Live demo of Amara, the AI voice agent built for Cinnamon Hotels & Resorts by Mytosis. He answers calls, checks availability, and books direct — 24/7.',
   robots: 'noindex, nofollow',
 }
 
@@ -34,7 +34,7 @@ export default function CinnamonDemoPage() {
               Meet Amara.
             </h1>
             <p className="mt-6 text-xl md:text-2xl text-neutral-400 italic max-w-lg mx-auto">
-              Cinnamon&apos;s AI voice agent. She answers every call, checks live availability, and
+              Cinnamon&apos;s AI voice agent. He answers every call, checks live availability, and
               books direct — 24 hours a day.
             </p>
             <p className="text-neutral-600 text-xs mt-6">

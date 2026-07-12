@@ -29,7 +29,7 @@ export function AmaraWidget() {
   const [errorMessage, setErrorMessage] = useState('')
 
   const vapiRef = useRef<Vapi | null>(null)
-  const bottomRef = useRef<HTMLDivElement | null>(null)
+  const transcriptContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     return () => {
@@ -38,7 +38,10 @@ export function AmaraWidget() {
   }, [])
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    const container = transcriptContainerRef.current
+    if (container) {
+      container.scrollTop = container.scrollHeight
+    }
   }, [transcript])
 
   async function startCall() {
@@ -136,6 +139,7 @@ export function AmaraWidget() {
 
       {/* Transcript area */}
       <div
+        ref={transcriptContainerRef}
         className="overflow-y-auto flex flex-col gap-3 p-6"
         style={{ minHeight: 240, maxHeight: 320 }}
       >
@@ -180,7 +184,6 @@ export function AmaraWidget() {
                 </p>
               </div>
             ))}
-            <div ref={bottomRef} />
           </>
         )}
       </div>

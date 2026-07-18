@@ -4,10 +4,9 @@ import Vapi from '@vapi-ai/web'
 import { useEffect, useRef, useState } from 'react'
 
 const VAPI_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPI_KEY!
-const ASSISTANT_ID = '77cdae2a-a6b7-4b5f-8a74-45ff16ec6cde'
 
 type Status = 'idle' | 'connecting' | 'in-call' | 'ended' | 'error'
-type TranscriptEntry = { speaker: 'Amara' | 'You'; text: string }
+type TranscriptEntry = { speaker: 'agent' | 'You'; text: string }
 
 // The SDK nests the real message at e.error.message for most failures (join
 // errors, daily errors, validation errors) rather than at the top level.
@@ -22,7 +21,12 @@ function extractErrorMessage(e: unknown): string {
   return "We couldn't connect the call. Please try again in a moment."
 }
 
-export function AmaraWidget() {
+type VoiceAgentWidgetProps = {
+  agentName: string
+  assistantId: string
+}
+
+export function VoiceAgentWidget({ agentName, assistantId }: VoiceAgentWidgetProps) {
   const [status, setStatus] = useState<Status>('idle')
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
   const [isMuted, setIsMuted] = useState(false)
@@ -54,7 +58,7 @@ export function AmaraWidget() {
     vapi.on('call-start', () => setStatus('in-call'))
     vapi.on('call-end', () => setStatus('ended'))
     vapi.on('error', (e: unknown) => {
-      console.warn('[Amara widget] Vapi error:', e)
+      console.warn(`[${agentName} widget] Vapi error:`, e)
       setStatus('error')
       setErrorMessage(extractErrorMessage(e))
     })
@@ -65,7 +69,7 @@ export function AmaraWidget() {
           setTranscript((prev) => [
             ...prev,
             {
-              speaker: msg.role === 'assistant' ? 'Amara' : 'You',
+              speaker: msg.role === 'assistant' ? 'agent' : 'You',
               text: msg.transcript!,
             },
           ])
@@ -76,9 +80,9 @@ export function AmaraWidget() {
     vapi.on('speech-end', () => {})
 
     try {
-      await vapi.start(ASSISTANT_ID)
+      await vapi.start(assistantId)
     } catch (e) {
-      console.warn('[Amara widget] Vapi start() threw:', e)
+      console.warn(`[${agentName} widget] Vapi start() threw:`, e)
       setStatus('error')
       setErrorMessage(extractErrorMessage(e))
     }
@@ -107,7 +111,7 @@ export function AmaraWidget() {
   const statusConfig: Record<Status, { color: string; label: string; pulse?: boolean }> = {
     idle: { color: 'bg-neutral-600', label: 'Ready' },
     connecting: { color: 'bg-yellow-400', label: 'Connecting...', pulse: true },
-    'in-call': { color: 'bg-green-500', label: 'In call with Amara', pulse: true },
+    'in-call': { color: 'bg-green-500', label: `In call with ${agentName}`, pulse: true },
     ended: { color: 'bg-neutral-400', label: 'Call ended' },
     error: { color: 'bg-red-500', label: 'Error' },
   }
@@ -147,7 +151,7 @@ export function AmaraWidget() {
           <div className="flex-1 flex flex-col items-center justify-center text-center py-16">
             <p className="text-2xl mb-2" aria-hidden="true">🎙️</p>
             <p className="text-sm text-neutral-400">
-              {status === 'idle' ? 'Press "Call Amara" to begin.' : 'Connecting to Amara...'}
+              {status === 'idle' ? `Press "Call ${agentName}" to begin.` : `Connecting to ${agentName}...`}
             </p>
             {status === 'connecting' && (
               <p className="text-xs text-neutral-500 mt-2">
@@ -170,14 +174,14 @@ export function AmaraWidget() {
               <div key={i} className="flex flex-col gap-1">
                 <span
                   className={`text-[10px] uppercase tracking-widest font-semibold ${
-                    entry.speaker === 'Amara' ? 'text-white' : 'text-neutral-500'
+                    entry.speaker === 'agent' ? 'text-white' : 'text-neutral-500'
                   }`}
                 >
-                  {entry.speaker}
+                  {entry.speaker === 'agent' ? agentName : entry.speaker}
                 </span>
                 <p
                   className={`text-sm leading-relaxed ${
-                    entry.speaker === 'Amara' ? 'text-neutral-200' : 'text-neutral-400 pl-4'
+                    entry.speaker === 'agent' ? 'text-neutral-200' : 'text-neutral-400 pl-4'
                   }`}
                 >
                   {entry.text}
@@ -198,7 +202,7 @@ export function AmaraWidget() {
               onClick={startCall}
               className="relative rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-blue-400/40 text-white py-3 text-sm font-semibold w-full shadow-[0_0_25px_rgba(59,130,246,0.55)] hover:shadow-[0_0_35px_rgba(59,130,246,0.8)] hover:from-white/30 hover:to-white/10 transition-all"
             >
-              Call Amara →
+              Call {agentName} →
             </button>
           </div>
         )}

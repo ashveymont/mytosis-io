@@ -3,14 +3,16 @@ import { VoiceAgentWidget } from '@/components/demo/VoiceAgentWidget'
 import { Spotlight } from '@/components/ui/spotlight'
 import { FloatingCTA } from '@/components/ui/floating-cta'
 
+const AGENT_NAME = 'Amaya'
+const ASSISTANT_ID = '8e08ab4d-e9fe-4128-be39-d73f15abf95d'
+
 export const metadata: Metadata = {
-  title: 'Amara — Cinnamon Hotels AI Voice Demo | Mytosis',
-  description:
-    'Live demo of Amara, the AI voice agent built for Cinnamon Hotels & Resorts by Mytosis. He answers calls, checks availability, and books direct — 24/7.',
+  title: `${AGENT_NAME} — Cape Weligama AI Voice Demo | Mytosis`,
+  description: `Live demo of ${AGENT_NAME}, the AI voice agent built for Cape Weligama by Mytosis. She answers calls, checks availability, and books direct — 24/7.`,
   robots: 'noindex, nofollow',
 }
 
-export default function CinnamonDemoPage() {
+export default function CapeDemoPage() {
   return (
     <div className="flex flex-col min-h-screen bg-black">
       {/* Top bar */}
@@ -28,24 +30,24 @@ export default function CinnamonDemoPage() {
         <div className="relative z-10" style={{ padding: '96px 48px 0' }}>
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-neutral-500 text-xs tracking-[0.2em] uppercase mb-4">
-              Live Demo &nbsp;·&nbsp; Cinnamon Hotels &amp; Resorts
+              Live Demo &nbsp;·&nbsp; Cape Weligama
             </p>
             <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400 leading-tight tracking-tight">
-              Meet Amara.
+              Meet {AGENT_NAME}.
             </h1>
             <p className="mt-6 text-xl md:text-2xl text-neutral-400 italic max-w-lg mx-auto">
-              Cinnamon&apos;s AI voice agent. He answers every call, checks live availability, and
+              Cape Weligama&apos;s AI voice agent. She answers every call, checks live availability, and
               books direct — 24 hours a day.
             </p>
             <p className="text-neutral-600 text-xs mt-6">
-              This is a live demo. Amara is connected to a test environment — not the live Cinnamon
-              reservation system.
+              This is a live demo. {AGENT_NAME} is connected to a test environment — not the live
+              Cape Weligama reservation system.
             </p>
           </div>
         </div>
 
-        <div id="amara-widget" className="relative z-10 flex flex-col items-center" style={{ padding: '40px 48px 80px' }}>
-          <VoiceAgentWidget agentName="Amara" assistantId="77cdae2a-a6b7-4b5f-8a74-45ff16ec6cde" />
+        <div id="agent-widget" className="relative z-10 flex flex-col items-center" style={{ padding: '40px 48px 80px' }}>
+          <VoiceAgentWidget agentName={AGENT_NAME} assistantId={ASSISTANT_ID} />
         </div>
       </div>
 
@@ -54,7 +56,7 @@ export default function CinnamonDemoPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-white/10 gap-y-10">
           <div className="text-center px-8 pt-10 sm:pt-0">
             <p className="text-xs tracking-[0.15em] uppercase text-neutral-500 mb-4">
-              What Amara Can Do
+              What {AGENT_NAME} Can Do
             </p>
             <div className="flex flex-col gap-2 text-sm text-neutral-400 leading-relaxed">
               <p>Check room availability by date</p>
@@ -80,8 +82,8 @@ export default function CinnamonDemoPage() {
       {/* Bottom CTA */}
       <div className="bg-gradient-to-br from-black to-neutral-950 border-t border-white/10 text-center" style={{ padding: 64 }}>
         <p className="text-sm text-neutral-400 max-w-md mx-auto">
-          Want Amara answering calls at your property? We&apos;re onboarding hotel groups across
-          Sri Lanka and the GCC now.
+          Want {AGENT_NAME} answering calls at your property? We&apos;re onboarding hotel groups
+          across Sri Lanka and the GCC now.
         </p>
         <div className="mt-8 flex justify-center">
           <FloatingCTA label="Get Early Access" href="https://mytosis.io/#contact" />

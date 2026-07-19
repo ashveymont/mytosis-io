@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
 // and Vapi's WebRTC infrastructure isn't in the main site's CSP allowlist —
 // so each one gets its own, more permissive header set, matched first and
 // excluded from the general rule below.
-const DEMO_ROUTES = ["cinnamon-demo", "cape-demo", "fort-bazaar-demo"];
+const DEMO_ROUTES = ["cinnamon-demo", "cape-demo", "fort-bazaar-demo", "the-bay-demo"];
 
 const csp = [
   "default-src 'self'",

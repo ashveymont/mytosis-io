@@ -1,5 +1,11 @@
 import type { NextConfig } from "next";
 
+// Voice-agent demo pages need microphone access for the Vapi voice widget,
+// and Vapi's WebRTC infrastructure isn't in the main site's CSP allowlist —
+// so each one gets its own, more permissive header set, matched first and
+// excluded from the general rule below.
+const DEMO_ROUTES = ["cinnamon-demo", "cape-demo", "fort-bazaar-demo"];
+
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://prod.spline.design https://unpkg.com https://va.vercel-scripts.com https://www.googletagmanager.com",
@@ -16,13 +22,8 @@ const csp = [
 const nextConfig: NextConfig = {
   async headers() {
     return [
-      {
-        // Voice-agent demo pages (/cinnamon-demo, /cape-demo) need microphone
-        // access for the Vapi voice widget, and Vapi's WebRTC infrastructure
-        // isn't in the main site's CSP allowlist — so they get their own,
-        // more permissive header set, matched first and excluded from the
-        // general rule below.
-        source: "/cinnamon-demo",
+      ...DEMO_ROUTES.map((route) => ({
+        source: `/${route}`,
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
@@ -32,21 +33,9 @@ const nextConfig: NextConfig = {
             value: "camera=(), microphone=(self), geolocation=()",
           },
         ],
-      },
+      })),
       {
-        source: "/cape-demo",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(self), geolocation=()",
-          },
-        ],
-      },
-      {
-        source: "/((?!cinnamon-demo|cape-demo).*)",
+        source: `/((?!${DEMO_ROUTES.join("|")}).*)`,
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
